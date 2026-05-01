@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>団体紹介 — 団体所属特典</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #1a1a2e;
+      --bg2:    #16213e;
+      --accent: #e94560;
+      --gold:   #f0a500;
+      --cyan:   #a8dadc;
+      --text:   #eaeaea;
+      --muted:  #8899aa;
+      --border: rgba(255,255,255,0.09);
+      --radius: 18px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+    }
+    .wrap { width: 100%; max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,14,30,.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px; max-width: 960px; margin: 0 auto; padding: 0 20px;
+    }
+    .nav-logo { font-size: 14px; font-weight: 700; color: var(--gold); text-decoration: none; letter-spacing: 1px; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-link {
+      font-size: 12px; font-weight: 500; color: var(--muted);
+      text-decoration: none; padding: 5px 12px; border-radius: 20px; transition: all .2s;
+    }
+    .nav-link:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .nav-link.active { color: var(--text); background: rgba(255,255,255,.09); font-weight: 700; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .nav-toggle:hover { background: rgba(255,255,255,.08); }
+    @media (max-width: 640px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 57px; left: 0; right: 0;
+        flex-direction: column;
+        gap: 4px;
+        background: rgba(10,14,30,.97);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 16px 16px;
+        backdrop-filter: blur(12px);
+      }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 15px; padding: 10px 16px; border-radius: 12px; }
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(160deg, #12122a 0%, #16213e 60%, #0f3460 100%);
+      padding: 56px 20px 64px; text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(168,218,220,.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 40px;
+      background: linear-gradient(to bottom right, transparent 49.5%, var(--bg) 50%);
+    }
+    .page-eyebrow {
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 4px; text-transform: uppercase; color: var(--cyan);
+      border: 1px solid rgba(168,218,220,.4); padding: 4px 16px; border-radius: 20px;
+      display: inline-block; margin-bottom: 18px; position: relative;
+    }
+    .page-title {
+      font-size: clamp(28px, 7vw, 44px); font-weight: 700; letter-spacing: 0.06em;
+      background: linear-gradient(120deg, #fff 30%, var(--cyan) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 10px; position: relative;
+    }
+    .page-sub { font-size: 14px; color: var(--muted); font-weight: 300; position: relative; }
+
+    /* ── TEAM LIST ── */
+    .teams-section { padding: 52px 0 20px; }
+    .sec-label {
+      font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 6px;
+    }
+    .sec-title { font-size: clamp(20px, 4vw, 24px); font-weight: 700; margin-bottom: 24px; }
+
+    /* チームカードグリッド */
+    .team-cards { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 600px) { .team-cards { grid-template-columns: repeat(3, 1fr); } }
+
+    .team-card {
+      background: #1c2a45; border: 2px solid var(--border);
+      border-radius: var(--radius); padding: 28px 22px 22px;
+      cursor: pointer; text-align: center;
+      transition: transform .2s, box-shadow .2s, border-color .25s;
+      -webkit-tap-highlight-color: transparent;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .team-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.4); }
+    .team-card.active {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 1px var(--cyan), 0 12px 36px rgba(168,218,220,.15);
+    }
+    .team-card-logo {
+      height: 72px; width: auto; max-width: 140px;
+      object-fit: contain; margin: 0 auto 16px; display: block; border-radius: 8px;
+    }
+    .team-card-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .team-card-type {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 1px;
+      padding: 3px 12px; border-radius: 10px; margin-bottom: 10px;
+    }
+    .type-volleyball { background: rgba(168,218,220,.18); color: var(--cyan); }
+    .type-sake       { background: rgba(255,152,0,.18); color: #ffcc80; }
+    .team-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .team-card-arrow {
+      display: inline-block; margin-top: auto; padding-top: 14px; font-size: 13px; color: var(--cyan);
+      font-weight: 700;
+    }
+    .arrow-chevron { display: inline-block; transition: transform .2s; }
+    .team-card.active .arrow-chevron { transform: rotate(180deg); }
+
+    /* ── TEAM DETAIL ── */
+    .detail-section { padding: 8px 0 80px; }
+
+    .team-detail {
+      display: none;
+      background: #1c2a45; border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; margin-top: 24px;
+    }
+    .team-detail.active { display: block; }
+
+    /* ヘッダー */
+    .td-header {
+      padding: 32px 28px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
+    }
+    .td-header-logo {
+      height: 80px; width: auto; max-width: 160px;
+      object-fit: contain; border-radius: 10px; flex-shrink: 0;
+    }
+    .td-header-body { flex: 1; min-width: 200px; }
+    .td-name { font-size: clamp(22px, 5vw, 28px); font-weight: 700; margin-bottom: 6px; }
+    .td-concept {
+      font-size: 14px; color: var(--cyan); font-weight: 500;
+      border-left: 3px solid var(--cyan); padding-left: 12px; line-height: 1.6;
+    }
+
+    /* 情報グリッド */
+    .td-info { padding: 24px 28px; display: grid; gap: 16px; }
+    @media (min-width: 600px) { .td-info { grid-template-columns: repeat(2, 1fr); } }
+
+    .td-info-item { display: flex; gap: 12px; align-items: flex-start; }
+    .td-info-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .td-info-body {}
+    .td-info-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 3px;
+    }
+    .td-info-val { font-size: 14px; line-height: 1.6; }
+    .td-info-val strong { color: var(--cyan); }
+
+    /* 説明文 */
+    .td-body { padding: 0 28px 24px; }
+    .td-body p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+    .td-body p + p { margin-top: 10px; }
+
+    /* リンクボタン */
+    .td-links { padding: 0 28px 24px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .td-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 700; padding: 9px 20px; border-radius: 20px;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .td-link:hover { opacity: .82; }
+    .td-link-instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: #fff; }
+    .td-link-web       { background: rgba(168,218,220,.15); color: var(--cyan); border: 1px solid rgba(168,218,220,.35); }
+    .td-link-event     { background: var(--accent); color: #fff; }
+    .td-link-youtube   { background: #ff0000; color: #fff; }
+
+    /* 仕切り */
+    .td-divider { height: 1px; background: var(--border); margin: 0 28px; }
+
+    /* 入団フォーム */
+    .td-form { padding: 24px 28px 28px; }
+    .td-form-title {
+      font-size: 18px; font-weight: 700; margin-bottom: 6px;
+    }
+    .td-form-sub { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+    .form-group { margin-bottom: 18px; }
+    .form-label {
+      display: block; font-size: 13px; font-weight: 700; color: var(--text);
+      margin-bottom: 7px; letter-spacing: 0.5px;
+    }
+    .form-label .required {
+      display: inline-block; font-size: 10px; background: var(--accent); color: #fff;
+      padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+    }
+    .form-label .optional {
+      display: inline-block; font-size: 10px; background: rgba(255,255,255,.1); color: var(--muted);
+      padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle;
+    }
+    .form-input, .form-textarea, .form-select {
+      width: 100%; background: rgba(0,0,0,.3);
+      border: 1px solid rgba(255,255,255,.15); border-radius: 10px;
+      padding: 11px 15px; font-family: 'Noto Sans JP', sans-serif;
+      font-size: 15px; color: var(--text); outline: none;
+      transition: border-color .2s, box-shadow .2s; -webkit-appearance: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,.25); }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: rgba(168,218,220,.5); box-shadow: 0 0 0 3px rgba(168,218,220,.08);
+    }
+    .form-textarea { resize: vertical; min-height: 110px; }
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238899aa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px;
+    }
+    .form-select option { background: #1c2a45; }
+
+    .submit-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--cyan); color: #111;
+      font-family: 'Noto Sans JP', sans-serif; font-size: 15px; font-weight: 700;
+      padding: 13px 32px; border-radius: 30px; border: none; cursor: pointer;
+      transition: opacity .2s, transform .2s;
+      box-shadow: 0 4px 20px rgba(168,218,220,.25);
+      width: 100%; justify-content: center;
+    }
+    .submit-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+    .form-note { font-size: 12px; color: var(--muted); margin-top: 12px; text-align: center; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0b0d1a; border-top: 1px solid var(--border);
+      padding: 36px 20px; text-align: center;
+    }
+    .ft-logo { font-size: 18px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+    .ft-tagline { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .ft-updated { font-size: 11px; color: rgba(255,255,255,.22); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(255,255,255,.96); color: #1a1a2e;
+      font-size: 14px; font-weight: 700; padding: 10px 28px;
+      border-radius: 30px; box-shadow: 0 8px 28px rgba(0,0,0,.35);
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1); z-index: 9999; white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ── FADE IN ── */
+    .fade-up { opacity: 0; transform: translateY(20px); transition: opacity .5s ease, transform .5s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">団体所属特典</a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">特典一覧</a>
+      <a href="teams.html" class="nav-link active">団体紹介</a>
+      <a href="events.html" class="nav-link">イベント</a>
+      <a href="contact.html" class="nav-link">お問い合わせ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-eyebrow">Our Teams</div>
+  <h1 class="page-title">団体紹介</h1>
+  <p class="page-sub">3つの団体があなたの参加を待っています</p>
+</section>
+
+<!-- ── TEAM LIST ── -->
+<section class="teams-section">
+  <div class="wrap">
+    <p class="sec-label">Teams &amp; Groups</p>
+    <h2 class="sec-title">団体一覧</h2>
+
+    <div class="team-cards">
+
+      <!-- バレリーナ -->
+      <div class="team-card fade-up" data-team="balerinas" onclick="toggleTeam('balerinas')">
+        <img src="バレリーナロゴ.jpg" class="team-card-logo" alt="バレリーナ">
+        <div class="team-card-name">バレリーナ</div>
+        <span class="team-card-type type-volleyball">バレーボール</span>
+        <p class="team-card-desc">「みんなで健康寿命を伸ばそう」をコンセプトに、初心者が集まる参加しやすいチーム。</p>
+        <span class="team-card-arrow"><span class="arrow-chevron">▼</span> 詳細を見る</span>
+      </div>
+
+      <!-- Satta Nixons -->
+      <div class="team-card fade-up" data-team="nixons" onclick="toggleTeam('nixons')" style="transition-delay:.1s">
+        <img src="ニクソンズロゴ.png" class="team-card-logo" alt="Satta Nixons">
+        <div class="team-card-name">Satta Nixons</div>
+        <span class="team-card-type type-volleyball">野球</span>
+        <p class="team-card-desc">スカイツリーグ参加中。選手・マネージャー問わず初心者大歓迎のチーム。</p>
+        <span class="team-card-arrow"><span class="arrow-chevron">▼</span> 詳細を見る</span>
+      </div>
+
+      <!-- 酔い善い宵 -->
+      <div class="team-card fade-up" data-team="yoiyoi" onclick="toggleTeam('yoiyoi')" style="transition-delay:.2s">
+        <img src="酔い善い宵ロゴ.png" class="team-card-logo" alt="酔い善い宵">
+        <div class="team-card-name">酔い善い宵 -ヨイヨイヨイ-</div>
+        <span class="team-card-type type-sake">日本酒イベント</span>
+        <p class="team-card-desc">一夜限りの体験型日本酒会。初参加・初心者も大歓迎です。</p>
+        <span class="team-card-arrow"><span class="arrow-chevron">▼</span> 詳細を見る</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TEAM DETAILS ── -->
+<section class="detail-section">
+  <div class="wrap">
+
+    <!-- バレリーナ詳細 -->
+    <div class="team-detail" id="detail-balerinas">
+      <img src="バレリーナ_集合写真.jpg" style="width:100%;height:auto;display:block;" alt="バレリーナ集合写真">
+      <div class="td-header">
+        <img src="バレリーナロゴ.jpg" class="td-header-logo" alt="バレリーナ">
+        <div class="td-header-body">
+          <div class="td-name">バレリーナ</div>
+          <div class="td-concept">「みんなで健康寿命伸ばそう」</div>
+        </div>
+      </div>
+
+      <div class="td-info">
+        <div class="td-info-item">
+          <span class="td-info-icon">🏐</span>
+          <div class="td-info-body">
+            <p class="td-info-label">競技</p>
+            <p class="td-info-val">バレーボール（混合）</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">📍</span>
+          <div class="td-info-body">
+            <p class="td-info-label">活動エリア</p>
+            <p class="td-info-val">都内</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">📅</span>
+          <div class="td-info-body">
+            <p class="td-info-label">活動頻度</p>
+            <p class="td-info-val">月1〜2回</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">🌱</span>
+          <div class="td-info-body">
+            <p class="td-info-label">レベル</p>
+            <p class="td-info-val"><strong>初心者が8割以上</strong>・経験不問</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">👥</span>
+          <div class="td-info-body">
+            <p class="td-info-label">募集対象</p>
+            <p class="td-info-val">男女ともに募集中</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="td-body">
+        <p>健康寿命を伸ばすことをテーマに、バレーボールを通じて楽しく体を動かすことを大切にしています。参加メンバーの8割以上が初心者なので、「バレーをやったことがない」「久しぶりにスポーツをしたい」という方でも安心して参加できます。</p>
+        <p>経験・年齢・性別問わず、一緒に楽しめる仲間を募集中です。</p>
+      </div>
+
+      <div class="td-divider"></div>
+
+      <div class="td-form">
+        <div class="td-form-title">🏐 入団を希望する</div>
+        <p class="td-form-sub">フォームを送信するとGmailの作成画面が開きます。内容を確認してから送信してください。</p>
+
+        <form onsubmit="submitJoin(event, 'バレリーナ')">
+          <div class="form-group">
+            <label class="form-label" for="b-name">お名前 <span class="required">必須</span></label>
+            <input class="form-input" type="text" id="b-name" placeholder="山田 太郎" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="b-email">メールアドレス <span class="required">必須</span></label>
+            <input class="form-input" type="email" id="b-email" placeholder="example@email.com" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="b-level">バレー経験 <span class="required">必須</span></label>
+            <select class="form-select" id="b-level" required>
+              <option value="" disabled selected>選択してください</option>
+              <option>未経験（初めて）</option>
+              <option>初心者（少し経験あり）</option>
+              <option>中級者</option>
+              <option>経験者</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="b-msg">自己紹介・メッセージ <span class="optional">任意</span></label>
+            <textarea class="form-textarea" id="b-msg" placeholder="参加したいと思ったきっかけや、自己紹介など自由にどうぞ。"></textarea>
+          </div>
+          <button class="submit-btn" type="submit">📩 入団希望を送る</button>
+          <p class="form-note">Gmailの作成画面が開きます</p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Satta Nixons詳細 -->
+    <div class="team-detail" id="detail-nixons">
+      <img src="SattaNixons_集合写真.jpg" style="width:100%;height:auto;display:block;" alt="Satta Nixons集合写真">
+      <div class="td-header">
+        <img src="ニクソンズロゴ.png" class="td-header-logo" alt="Satta Nixons">
+        <div class="td-header-body">
+          <div class="td-name">Satta Nixons</div>
+          <div class="td-concept">選手もマネージャーも、初心者大歓迎</div>
+        </div>
+      </div>
+
+      <div class="td-info">
+        <div class="td-info-item">
+          <span class="td-info-icon">⚾</span>
+          <div class="td-info-body">
+            <p class="td-info-label">競技</p>
+            <p class="td-info-val">野球</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">🏆</span>
+          <div class="td-info-body">
+            <p class="td-info-label">リーグ</p>
+            <p class="td-info-val"><strong>スカイツリーグ</strong>参加中</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">📅</span>
+          <div class="td-info-body">
+            <p class="td-info-label">活動頻度</p>
+            <p class="td-info-val">月1〜2回</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">🌱</span>
+          <div class="td-info-body">
+            <p class="td-info-label">レベル</p>
+            <p class="td-info-val">初心者歓迎・経験不問</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">👥</span>
+          <div class="td-info-body">
+            <p class="td-info-label">募集対象</p>
+            <p class="td-info-val"><strong>選手・マネージャー</strong>ともに募集中</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="td-body">
+        <p>スカイツリーグに参加している野球チームです。試合や練習を通じて野球を楽しむことを大切にしています。初心者の方も経験者の方も、選手としてもマネージャーとしても大歓迎です。</p>
+        <p>チームの雰囲気や活動の様子は公式インスタグラムやリーグページからご覧いただけます。</p>
+      </div>
+
+      <div class="td-links">
+        <a href="https://www.instagram.com/satta_nixons" target="_blank" rel="noopener noreferrer" class="td-link td-link-instagram">
+          📸 公式インスタグラム
+        </a>
+        <a href="https://ts-league.com/team/satta/" target="_blank" rel="noopener noreferrer" class="td-link td-link-web">
+          🏆 スカイツリーグ チームページ
+        </a>
+      </div>
+
+      <div class="td-divider"></div>
+
+      <div class="td-form">
+        <div class="td-form-title">🏐 入団を希望する</div>
+        <p class="td-form-sub">フォームを送信するとGmailの作成画面が開きます。内容を確認してから送信してください。</p>
+
+        <form onsubmit="submitJoin(event, 'Satta Nixons')">
+          <div class="form-group">
+            <label class="form-label" for="n-name">お名前 <span class="required">必須</span></label>
+            <input class="form-input" type="text" id="n-name" placeholder="山田 太郎" required autocomplete="name">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="n-email">メールアドレス <span class="required">必須</span></label>
+            <input class="form-input" type="email" id="n-email" placeholder="example@email.com" required autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="n-role">希望する役割 <span class="required">必須</span></label>
+            <select class="form-select" id="n-role" required>
+              <option value="" disabled selected>選択してください</option>
+              <option>選手として参加したい</option>
+              <option>マネージャーとして参加したい</option>
+              <option>どちらでも</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="n-level">野球経験 <span class="required">必須</span></label>
+            <select class="form-select" id="n-level" required>
+              <option value="" disabled selected>選択してください</option>
+              <option>未経験（初めて）</option>
+              <option>初心者（少し経験あり）</option>
+              <option>中級者</option>
+              <option>経験者</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="n-msg">自己紹介・メッセージ <span class="optional">任意</span></label>
+            <textarea class="form-textarea" id="n-msg" placeholder="参加したいと思ったきっかけや、自己紹介など自由にどうぞ。"></textarea>
+          </div>
+          <button class="submit-btn" type="submit">📩 入団希望を送る</button>
+          <p class="form-note">Gmailの作成画面が開きます</p>
+        </form>
+      </div>
+    </div>
+
+    <!-- 酔い善い宵詳細 -->
+    <div class="team-detail" id="detail-yoiyoi">
+      <img src="酔い善い宵_集合写真.jpg" style="width:100%;height:auto;display:block;" alt="酔い善い宵集合写真">
+      <div class="td-header">
+        <img src="酔い善い宵ロゴ.png" class="td-header-logo" alt="酔い善い宵">
+        <div class="td-header-body">
+          <div class="td-name">酔い善い宵 -ヨイヨイヨイ-</div>
+          <div class="td-concept">一夜限りの体験型日本酒会</div>
+        </div>
+      </div>
+
+      <div class="td-info">
+        <div class="td-info-item">
+          <span class="td-info-icon">🍶</span>
+          <div class="td-info-body">
+            <p class="td-info-label">ジャンル</p>
+            <p class="td-info-val">体験型日本酒イベント</p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">🌱</span>
+          <div class="td-info-body">
+            <p class="td-info-label">参加ハードル</p>
+            <p class="td-info-val">初参加・初心者<strong>大歓迎</strong></p>
+          </div>
+        </div>
+        <div class="td-info-item">
+          <span class="td-info-icon">🎟</span>
+          <div class="td-info-body">
+            <p class="td-info-label">次回開催</p>
+            <p class="td-info-val">第3回 開催予定（Peatixにて受付中）</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="td-body">
+        <p>「<strong>酔い</strong>」は、ただ酔うためじゃない。<br>
+        「<strong>善い</strong>」は、心地よく、記憶に残るため。<br>
+        「<strong>宵</strong>」は、人と酒がいちばん近づく時間。</p>
+        <p>そんな想いから生まれた、一夜限りの体験型日本酒会です。日本酒好きの方も、初心者の方も大歓迎。参加者の多くが日本酒会初参加ですので、安心してご参加ください。</p>
+      </div>
+
+      <div class="td-links">
+        <a href="events.html" class="td-link td-link-event">
+          🎟 第3回 酔い善い宵に申し込む
+        </a>
+        <a href="https://youtube.com/channel/UCW26uIDqAtsL8_cXkG94vNw?si=yOPFC8v6RykPS6G9" target="_blank" rel="noopener noreferrer" class="td-link td-link-youtube">
+          ▶ 公式YouTube
+        </a>
+      </div>
+
+      <div class="td-divider"></div>
+
+      <div class="td-form" style="text-align:center; padding-top:28px; padding-bottom:32px;">
+        <p style="font-size:15px; font-weight:700; margin-bottom:10px;">🍶 参加希望はイベントページから</p>
+        <p style="font-size:14px; color:var(--muted); margin-bottom:20px; line-height:1.7;">
+          酔い善い宵への参加申し込みはPeatixにて受け付けています。<br>
+          下記のイベントページからチケットをご購入ください。
+        </p>
+        <a href="events.html" class="submit-btn" style="display:inline-flex; width:auto; padding:13px 36px; text-decoration:none; background:var(--accent); color:#fff;">
+          🎟 イベントページへ
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-logo">団体所属特典</div>
+  <p class="ft-tagline">バレリーナ | Satta Nixons | 酔い善い宵 -ヨイヨイヨイ-</p>
+  <p class="ft-updated">最終更新日: 2026年5月1日</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  /* ハンバーガーメニュー */
+  (function() {
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.textContent = open ? '✕' : '☰';
+      toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    });
+    links.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.textContent = '☰';
+    }));
+  })();
+
+  const MAIL = 'nixons.kaju@gmail.com';
+
+  function toggleTeam(id) {
+    const cards   = document.querySelectorAll('.team-card');
+    const details = document.querySelectorAll('.team-detail');
+    const clickedCard   = document.querySelector(`[data-team="${id}"]`);
+    const clickedDetail = document.getElementById(`detail-${id}`);
+    const isOpen = clickedDetail.classList.contains('active');
+
+    cards.forEach(c => c.classList.remove('active'));
+    details.forEach(d => d.classList.remove('active'));
+
+    if (!isOpen) {
+      clickedCard.classList.add('active');
+      clickedDetail.classList.add('active');
+      setTimeout(() => {
+        clickedDetail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
+  }
+
+  function submitJoin(e, teamName) {
+    e.preventDefault();
+    const form    = e.target;
+    const name    = form.querySelector('input[type="text"]').value.trim();
+    const email   = form.querySelector('input[type="email"]').value.trim();
+    const selects = form.querySelectorAll('select');
+    const textarea = form.querySelector('textarea');
+
+    let details = '';
+    selects.forEach(s => {
+      if (s.value) details += `${s.previousElementSibling.textContent.replace(/必須|任意/g,'').trim()}: ${s.value}\n`;
+    });
+    if (textarea && textarea.value.trim()) {
+      details += `\nメッセージ:\n${textarea.value.trim()}`;
+    }
+
+    const subject = encodeURIComponent(`【入団希望】${teamName} - ${name}`);
+    const body    = encodeURIComponent(
+      `お名前: ${name}\nメールアドレス: ${email}\n希望チーム: ${teamName}\n\n${details}`
+    );
+
+    window.open(
+      `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(MAIL)}&su=${subject}&body=${body}`,
+      '_blank'
+    );
+    showToast('Gmailの作成画面を開きました');
+  }
+
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+
+  /* スクロールフェードイン */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

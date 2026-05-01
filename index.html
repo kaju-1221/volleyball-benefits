@@ -41,6 +41,74 @@
       padding: 0 20px;
     }
 
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,30,.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .nav-logo {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all .2s;
+    }
+    .nav-link:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .nav-link.active { color: var(--text); background: rgba(255,255,255,.09); font-weight: 700; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .nav-toggle:hover { background: rgba(255,255,255,.08); }
+    @media (max-width: 640px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 57px; left: 0; right: 0;
+        flex-direction: column;
+        gap: 4px;
+        background: rgba(10,14,30,.97);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 16px 16px;
+        backdrop-filter: blur(12px);
+      }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 15px; padding: 10px 16px; border-radius: 12px; }
+    }
+
     /* ─── HERO ─── */
     .hero {
       position: relative;
@@ -165,41 +233,46 @@
       letter-spacing: 1px;
     }
 
-    /* ─ VIP Card ─ */
+    /* ─ 会員証カード ─ */
     .vip-card {
       position: relative;
       max-width: 390px;
       margin: 0 auto 40px;
-      background: linear-gradient(145deg, #0c1e3a 0%, #0f2a4a 45%, #091628 100%);
-      border: 1.5px solid rgba(240,165,0,.5);
-      border-radius: 22px;
-      padding: 26px 28px 24px;
+      background: linear-gradient(160deg, #080f1e 0%, #0d2040 55%, #0a1830 100%);
+      border: 1.5px solid rgba(240,165,0,.45);
+      border-radius: 20px;
       overflow: hidden;
       box-shadow:
-        0 32px 80px rgba(0,0,0,.65),
-        0 0 0 1px rgba(255,255,255,.05) inset,
-        0 0 60px rgba(240,165,0,.07);
+        0 32px 80px rgba(0,0,0,.7),
+        0 0 0 1px rgba(255,255,255,.04) inset,
+        0 0 50px rgba(240,165,0,.08);
       transition: transform .3s, box-shadow .3s;
-      text-align: left;
     }
     .vip-card:hover {
-      transform: translateY(-4px) rotate(-0.4deg);
-      box-shadow: 0 44px 100px rgba(0,0,0,.7), 0 0 80px rgba(240,165,0,.13);
+      transform: translateY(-5px) rotate(-0.3deg);
+      box-shadow: 0 44px 100px rgba(0,0,0,.75), 0 0 80px rgba(240,165,0,.14);
     }
-    /* シマーアニメーション */
+    /* シマー */
     .vip-card::before {
       content: '';
       position: absolute;
       top: -50%; left: -70%;
-      width: 55%; height: 200%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
+      width: 50%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
       transform: skewX(-18deg);
       animation: cardShimmer 6s ease-in-out infinite;
       pointer-events: none;
+      z-index: 1;
     }
     @keyframes cardShimmer {
       0%   { left: -70%; }
       100% { left: 150%; }
+    }
+    /* ゴールドトップストライプ */
+    .vip-top-strip {
+      height: 5px;
+      background: linear-gradient(90deg, #b87a00, var(--gold), #ffd460, var(--gold), #b87a00);
+      position: relative; z-index: 2;
     }
     /* 背景装飾円 */
     .vip-bg-r {
@@ -207,104 +280,122 @@
       border-radius: 50%;
       pointer-events: none;
     }
-    .vip-bg-r1 { width: 220px; height: 220px; top: -90px; right: -70px; border: 1px solid rgba(240,165,0,.1); }
-    .vip-bg-r2 { width: 150px; height: 150px; top: -50px; right: -30px; border: 1px solid rgba(240,165,0,.2); }
+    .vip-bg-r1 { width: 260px; height: 260px; top: -100px; right: -80px; border: 1px solid rgba(240,165,0,.08); }
+    .vip-bg-r2 { width: 170px; height: 170px; top: -55px; right: -35px; border: 1px solid rgba(240,165,0,.16); }
 
+    .vip-body {
+      padding: 22px 28px 24px;
+      position: relative; z-index: 2;
+    }
+    /* 上部行 */
     .vip-head {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
-    .vip-logo {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 24px;
-      font-weight: 900;
-      color: var(--gold);
-      letter-spacing: 1px;
-    }
-    .vip-exclusive {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--gold);
-      background: rgba(240,165,0,.12);
-      border: 1px solid rgba(240,165,0,.35);
-      padding: 4px 12px;
-      border-radius: 6px;
-    }
-
-    /* 3テーマ行 */
-    .vip-themes {
-      display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px 0;
-      margin-bottom: 18px;
-      border-top: 1px solid rgba(255,255,255,.07);
-      border-bottom: 1px solid rgba(255,255,255,.07);
+      margin-bottom: 20px;
     }
-    .vip-theme {
-      flex: 1;
-      text-align: center;
-    }
-    .vip-theme-name {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      letter-spacing: 2px;
-    }
-    .vip-theme-sep {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: rgba(240,165,0,.35);
-      padding: 0 4px;
-      flex-shrink: 0;
-    }
-
-    .vip-chip {
-      width: 44px; height: 33px;
-      background: linear-gradient(135deg, var(--gold), #b87a00);
-      border-radius: 7px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.4);
-    }
-    .vip-num {
+    .vip-circle-name {
       font-family: 'Montserrat', sans-serif;
       font-size: 13px;
-      letter-spacing: 5px;
-      color: rgba(255,255,255,.4);
-      margin-bottom: 18px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
     }
-    .vip-foot {
+    .vip-exclusive {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,.5);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 4px 10px;
+      border-radius: 5px;
+    }
+    /* 会員証 大タイトル */
+    .vip-kaiin {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(40px, 10vw, 54px);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      color: #fff;
+      text-align: center;
+      margin-bottom: 4px;
+      text-shadow: 0 0 40px rgba(240,165,0,.25), 0 2px 4px rgba(0,0,0,.5);
+      line-height: 1.1;
+    }
+    .vip-kaiin-en {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      color: var(--gold);
+      text-align: center;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+      opacity: .8;
+    }
+    /* 区切り */
+    .vip-rule {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .vip-rule::before, .vip-rule::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(240,165,0,.45));
+    }
+    .vip-rule::after { background: linear-gradient(to left, transparent, rgba(240,165,0,.45)); }
+    .vip-rule-diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+    /* バーコード装飾 */
+    .vip-barcode {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 2px;
+      height: 36px;
+      margin-bottom: 20px;
+    }
+    .vip-bar {
+      background: rgba(255,255,255,.2);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    /* フッター行 */
+    .vip-card-foot {
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
     }
-    .vip-name {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 15px;
+    .vip-org {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
       color: var(--text);
+      letter-spacing: 1px;
+      margin-bottom: 3px;
     }
-    .vip-count { text-align: right; }
-    .vip-count .vc-num {
+    .vip-benefit-lbl {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1px;
       font-family: 'Montserrat', sans-serif;
-      font-size: 34px;
+    }
+    .vip-year {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px;
       font-weight: 900;
       color: var(--gold);
+      letter-spacing: 1px;
       line-height: 1;
-    }
-    .vip-count .vc-lbl {
-      font-size: 9px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--muted);
     }
 
     /* 団体バッジ */
@@ -803,6 +894,20 @@
 </head>
 <body>
 
+<!-- ── NAV ── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">団体所属特典</a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link active">特典一覧</a>
+      <a href="teams.html" class="nav-link">団体紹介</a>
+      <a href="events.html" class="nav-link">イベント</a>
+      <a href="contact.html" class="nav-link">お問い合わせ</a>
+    </div>
+  </div>
+</nav>
+
 <!-- ── HERO ── -->
 <section class="hero">
   <div class="hero-deco hero-deco-1"></div>
@@ -814,24 +919,31 @@
 
   <div class="hero-rule"><div class="hero-rule-diamond"></div></div>
 
-  <!-- VIP メンバーカード -->
+  <!-- 会員証カード -->
   <div class="vip-card">
+    <div class="vip-top-strip"></div>
     <div class="vip-bg-r vip-bg-r1"></div>
     <div class="vip-bg-r vip-bg-r2"></div>
 
-    <div class="vip-head">
-      <span class="vip-logo">VC</span>
-      <span class="vip-exclusive">会員限定特典</span>
-    </div>
+    <div class="vip-body">
+      <div class="vip-head">
+        <span class="vip-circle-name">Volley Circle</span>
+        <span class="vip-exclusive">会員限定</span>
+      </div>
 
-    <div class="vip-chip"></div>
-    <div class="vip-num">•••• •••• •••• 2026</div>
+      <div class="vip-kaiin">会員証</div>
+      <div class="vip-kaiin-en">Member Card</div>
 
-    <div class="vip-foot">
-      <div class="vip-name">VIP</div>
-      <div class="vip-count">
-        <div class="vc-num">5</div>
-        <div class="vc-lbl">Benefits</div>
+      <div class="vip-rule"><div class="vip-rule-diamond"></div></div>
+
+      <div class="vip-barcode" id="vipBarcode"></div>
+
+      <div class="vip-card-foot">
+        <div>
+          <div class="vip-org">バレリーナ / Satta Nixons<br>酔い善い宵</div>
+          <div class="vip-benefit-lbl">5 Benefits Included</div>
+        </div>
+        <div class="vip-year">2026</div>
       </div>
     </div>
   </div>
@@ -854,11 +966,15 @@
     <span class="ticker-sep">◆</span>
     <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
     <span class="ticker-sep">◆</span>
+    <img src="酔い善い宵ロゴ.png" class="ticker-logo" alt="酔い善い宵">
+    <span class="ticker-sep">◆</span>
     <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
     <span class="ticker-sep">◆</span>
     <img src="ワインロゴ.png" class="ticker-logo" alt="ワイン">
     <span class="ticker-sep">◆</span>
     <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
+    <span class="ticker-sep">◆</span>
+    <img src="酔い善い宵ロゴ.png" class="ticker-logo" alt="酔い善い宵">
     <span class="ticker-sep">◆</span>
     <!-- 2周目（シームレスループ用） -->
     <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
@@ -867,11 +983,15 @@
     <span class="ticker-sep">◆</span>
     <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
     <span class="ticker-sep">◆</span>
+    <img src="酔い善い宵ロゴ.png" class="ticker-logo" alt="酔い善い宵">
+    <span class="ticker-sep">◆</span>
     <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
     <span class="ticker-sep">◆</span>
     <img src="ワインロゴ.png" class="ticker-logo" alt="ワイン">
     <span class="ticker-sep">◆</span>
     <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
+    <span class="ticker-sep">◆</span>
+    <img src="酔い善い宵ロゴ.png" class="ticker-logo" alt="酔い善い宵">
     <span class="ticker-sep">◆</span>
   </div>
 </div>
@@ -958,7 +1078,7 @@
           <span class="cat-tag cat-life">生活</span>
           <span class="b-icon">🏠</span>
           <h3 class="b-title">不動産手数料半額</h3>
-          <p class="b-summary">渋谷センター街の不動産屋の副社長がかじゅの知り合い。仲介手数料が最大半額に。</p>
+          <p class="b-summary">渋谷センター街の不動産屋の店長がかじゅの知り合い。仲介手数料が最大半額に。</p>
         </div>
         <div class="b-foot">
           <span>詳細・使い方を見る</span>
@@ -977,14 +1097,14 @@
               <span class="d-ico">🤝</span>
               <div class="d-body">
                 <p class="d-label">コネクション</p>
-                <p class="d-val">渋谷センター街にある不動産会社の副社長・<strong>森尻さん</strong>がかじゅの知り合いです。森尻さんへは直接LINEでご連絡いただけます。</p>
+                <p class="d-val">渋谷センター街にある不動産会社の<strong>店長</strong>がかじゅの知り合いです。店長へは直接LINEでご連絡いただけます。</p>
               </div>
             </div>
             <div class="d-row">
               <span class="d-ico">📋</span>
               <div class="d-body">
                 <p class="d-label">使い方</p>
-                <p class="d-val">利用希望の方は <strong>かじゅに直接ご連絡ください</strong>。森尻さんのLINEをご案内します。</p>
+                <p class="d-val">利用希望の方は <strong>かじゅに直接ご連絡ください</strong>。店長のLINEをご案内します。</p>
               </div>
             </div>
           </div>
@@ -1111,6 +1231,37 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
+  /* ハンバーガーメニュー */
+  (function() {
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.textContent = open ? '✕' : '☰';
+      toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    });
+    links.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.textContent = '☰';
+    }));
+  })();
+
+  /* バーコード装飾生成 */
+  (function() {
+    const bc = document.getElementById('vipBarcode');
+    if (!bc) return;
+    const pattern = [2,1,3,1,2,3,1,2,1,3,2,1,3,1,2,1,3,2,1,3,1,2,3,1,2,1,3,1,2,3,1,2,1,2,3,1,2,3,1,2];
+    pattern.forEach(h => {
+      const bar = document.createElement('div');
+      bar.className = 'vip-bar';
+      const w = h === 1 ? 1 : h === 2 ? 2 : 3;
+      const ht = 14 + h * 5;
+      bar.style.cssText = `width:${w}px;height:${ht}px`;
+      bc.appendChild(bar);
+    });
+  })();
+
   /* スクロールフェードイン */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });

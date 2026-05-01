@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>イベント告知 — 団体所属特典</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:     #1a1a2e;
+      --bg2:    #16213e;
+      --accent: #e94560;
+      --gold:   #f0a500;
+      --cyan:   #a8dadc;
+      --text:   #eaeaea;
+      --muted:  #8899aa;
+      --border: rgba(255,255,255,0.09);
+      --radius: 18px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+    }
+    .wrap { width: 100%; max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+    /* ── NAV ── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,14,30,.92);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .nav-logo {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+    .nav-links { display: flex; gap: 6px; }
+    .nav-link {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 6px 14px;
+      border-radius: 20px;
+      transition: all .2s;
+    }
+    .nav-link:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .nav-link.active { color: var(--text); background: rgba(255,255,255,.09); font-weight: 700; }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      padding: 6px 10px;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .nav-toggle:hover { background: rgba(255,255,255,.08); }
+    @media (max-width: 640px) {
+      .nav-toggle { display: block; }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 57px; left: 0; right: 0;
+        flex-direction: column;
+        gap: 4px;
+        background: rgba(10,14,30,.97);
+        border-bottom: 1px solid var(--border);
+        padding: 12px 16px 16px;
+        backdrop-filter: blur(12px);
+      }
+      .nav-links.open { display: flex; }
+      .nav-link { font-size: 15px; padding: 10px 16px; border-radius: 12px; }
+    }
+
+    /* ── PAGE HERO ── */
+    .page-hero {
+      background: linear-gradient(160deg, #12122a 0%, #16213e 60%, #0f3460 100%);
+      padding: 56px 20px 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(233,69,96,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom right, transparent 49.5%, var(--bg) 50%);
+    }
+    .page-eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(233,69,96,.4);
+      padding: 4px 16px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .page-title {
+      font-size: clamp(28px, 7vw, 44px);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      background: linear-gradient(120deg, #fff 30%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .page-sub {
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      position: relative;
+    }
+
+    /* ── EVENTS ── */
+    .events-section { padding: 52px 0 80px; }
+    .sec-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .sec-title { font-size: clamp(20px, 4vw, 24px); font-weight: 700; margin-bottom: 28px; }
+
+    /* イベントカード */
+    .event-card {
+      background: #1c2a45;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 28px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .event-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,.4); }
+
+    .event-banner {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .event-banner-placeholder {
+      width: 100%;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #1a2a4a, #0f3460);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .event-body { padding: 24px; }
+    .event-tags { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+    .event-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 12px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+    }
+    .tag-yoi  { background: rgba(255,152,0,.18); color: #ffcc80; }
+    .tag-new  { background: rgba(233,69,96,.2); color: #f48fb1; }
+
+    .event-title { font-size: clamp(20px, 5vw, 26px); font-weight: 700; margin-bottom: 10px; }
+    .event-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .event-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .event-meta-icon { font-size: 16px; }
+    .event-desc { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+
+    .event-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 30px;
+      text-decoration: none;
+      transition: opacity .2s, transform .2s;
+      box-shadow: 0 4px 20px rgba(233,69,96,.3);
+    }
+    .event-cta:hover { opacity: .88; transform: translateY(-1px); }
+
+    /* 告知依頼ボックス */
+    .request-box {
+      background: rgba(240,165,0,.06);
+      border: 1px solid rgba(240,165,0,.25);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      margin-top: 48px;
+      text-align: center;
+    }
+    .request-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--gold); }
+    .request-box p { font-size: 14px; color: var(--muted); margin-bottom: 18px; line-height: 1.7; }
+    .request-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold);
+      color: #111;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .request-btn:hover { opacity: .85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0b0d1a;
+      border-top: 1px solid var(--border);
+      padding: 36px 20px;
+      text-align: center;
+    }
+    .ft-logo { font-family: 'Noto Sans JP', sans-serif; font-size: 18px; font-weight: 700; color: var(--gold); margin-bottom: 4px; }
+    .ft-tagline { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .ft-updated { font-size: 11px; color: rgba(255,255,255,.22); }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">団体所属特典</a>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="nav-link">特典一覧</a>
+      <a href="teams.html" class="nav-link">団体紹介</a>
+      <a href="events.html" class="nav-link active">イベント</a>
+      <a href="contact.html" class="nav-link">お問い合わせ</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero">
+  <div class="page-eyebrow">Event News</div>
+  <h1 class="page-title">イベント告知</h1>
+  <p class="page-sub">団員・関連団体によるイベント情報をお届けします</p>
+</section>
+
+<!-- ── EVENTS ── -->
+<section class="events-section">
+  <div class="wrap">
+    <p class="sec-label">Current Events</p>
+    <h2 class="sec-title">開催予定のイベント</h2>
+
+    <!-- 第3回酔い善い宵 -->
+    <article class="event-card">
+      <img src="第３回酔い善い宵バナー.jpg" class="event-banner" alt="第3回酔い善い宵バナー" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="event-banner-placeholder" style="display:none;">
+        <img src="酔い善い宵ロゴ.png" style="height:80px;object-fit:contain;opacity:.6;">
+      </div>
+
+      <div class="event-body">
+        <div class="event-tags">
+          <span class="event-tag tag-yoi">酔い善い宵</span>
+          <span class="event-tag tag-new">開催予定</span>
+        </div>
+
+        <h3 class="event-title">第3回 酔い善い宵 -ヨイヨイヨイ-</h3>
+
+        <div class="event-meta">
+          <span class="event-meta-item"><span class="event-meta-icon">📍</span>詳細はPeatixにて</span>
+          <span class="event-meta-item"><span class="event-meta-icon">🎟</span>Peatixにてチケット販売中</span>
+        </div>
+
+        <p class="event-desc">
+          日本酒を愛する仲間たちが集う、第3回目の酔い善い宵。おいしいお酒と会話を楽しみましょう。
+          詳細・チケットの購入はPeatixページをご確認ください。
+        </p>
+
+        <a href="https://yoiyoiyoi3.peatix.com" target="_blank" rel="noopener noreferrer" class="event-cta">
+          🎟 チケットを購入する
+        </a>
+      </div>
+    </article>
+
+    <!-- 告知依頼 -->
+    <div class="request-box">
+      <h3>イベント告知の掲載依頼</h3>
+      <p>団員や関連団体がイベントを開催する際、こちらのページに掲載できます。<br>お問い合わせフォームよりご連絡ください。</p>
+      <a href="contact.html" class="request-btn">📩 掲載を依頼する</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-logo">団体所属特典</div>
+  <p class="ft-tagline">バレリーナ | Satta Nixons | 酔い善い宵 -ヨイヨイヨイ-</p>
+  <p class="ft-updated">最終更新日: 2026年5月1日</p>
+</footer>
+
+<script>
+  (function() {
+    const toggle = document.getElementById('navToggle');
+    const links  = document.getElementById('navLinks');
+    if (!toggle) return;
+    toggle.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      toggle.textContent = open ? '✕' : '☰';
+      toggle.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+    });
+    links.querySelectorAll('.nav-link').forEach(a => a.addEventListener('click', () => {
+      links.classList.remove('open');
+      toggle.textContent = '☰';
+    }));
+  })();
+</script>
+</body>
+</html>
