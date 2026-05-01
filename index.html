@@ -303,14 +303,16 @@
       text-transform: uppercase;
     }
     .vip-exclusive {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: rgba(255,255,255,.5);
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.12);
-      padding: 4px 10px;
-      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: #111;
+      background: linear-gradient(90deg, #f0a500, #ffd460, #f0a500);
+      border: none;
+      padding: 5px 14px;
+      border-radius: 6px;
+      box-shadow: 0 0 12px rgba(240,165,0,.5);
+      text-shadow: none;
     }
     /* 会員証 大タイトル */
     .vip-kaiin {
@@ -457,6 +459,15 @@
       background: var(--bg2);
       padding: 56px 0 48px;
     }
+    .monthly-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+    @media (min-width: 720px) { .monthly-grid { grid-template-columns: 1fr 1fr; } }
+    .monthly-col { display: flex; flex-direction: column; }
+    .monthly-col .m-banner { flex: 1; }
     .sec-label {
       font-family: 'Montserrat', sans-serif;
       font-size: 11px;
@@ -551,6 +562,23 @@
       transition: opacity .2s;
     }
     .m-cta:hover { opacity: .88; }
+
+    /* イベントバナー */
+    .m-banner-event {
+      background: linear-gradient(135deg, #1a1040 0%, #2d1b6e 50%, #1a0a30 100%);
+      border: 1px solid rgba(240,165,0,.35);
+      box-shadow: 0 12px 44px rgba(240,165,0,.15);
+      animation: eventGlow 4s ease-in-out infinite;
+    }
+    @keyframes eventGlow {
+      0%, 100% { box-shadow: 0 12px 44px rgba(240,165,0,.15); }
+      50%       { box-shadow: 0 16px 56px rgba(240,165,0,.28); }
+    }
+    .m-banner-event:hover { animation-play-state: paused; }
+    .m-banner-event .m-tag { background: rgba(240,165,0,.25); color: var(--gold); }
+    .m-banner-event .m-desc { color: rgba(255,255,255,.8); }
+    .m-banner-event .m-deadline { color: var(--gold); background: rgba(240,165,0,.15); }
+    .m-banner-event .m-cta { background: var(--gold); color: #111; }
 
     /* ─── BENEFITS ─── */
     .benefits { padding: 56px 0 80px; }
@@ -934,7 +962,7 @@
 
     <div class="vip-body">
       <div class="vip-head">
-        <span class="vip-circle-name">Volley Circle</span>
+        <span class="vip-circle-name">Special Benefits</span>
         <span class="vip-exclusive">会員限定</span>
       </div>
 
@@ -1007,19 +1035,44 @@
 <section class="monthly">
   <div class="wrap">
     <p class="sec-label">Today's Pick</p>
-    <h2 class="sec-title">今月のおすすめ特典</h2>
+    <h2 class="sec-title">今月のおすすめ</h2>
 
-    <div class="m-banner" onclick="openCard('chocozap')">
-      <div class="m-banner-body">
-        <span class="m-tag">★ 今月イチオシ</span>
-        <div class="m-title">チョコザップ 2ヶ月無料</div>
-        <p class="m-desc">24時間365日いつでも利用できるフィットネスジムが、会員証の提示だけで2ヶ月間完全無料！まずは気軽にカラダを動かそう。</p>
-        <p class="m-deadline">⏰ 申込期限：2026年5月11日まで</p>
-        <span class="m-cta">詳細を見る &rarr;</span>
+    <div class="monthly-grid">
+
+      <!-- おすすめ特典 -->
+      <div class="monthly-col">
+        <p style="font-size:15px;font-weight:700;letter-spacing:1px;color:var(--accent);margin-bottom:10px;">🎁 おすすめ特典</p>
+        <div class="m-banner" onclick="openCard('chocozap')">
+          <div class="m-banner-body">
+            <span class="m-tag">★ 今月イチオシ</span>
+            <div class="m-title">チョコザップ 2ヶ月無料</div>
+            <p class="m-desc">24時間365日いつでも利用できるフィットネスジムが2ヶ月間完全無料！</p>
+            <p class="m-deadline">⏰ 申込期限：2026年5月11日まで</p>
+            <span class="m-cta">詳細を見る &rarr;</span>
+          </div>
+          <div class="m-banner-logo">
+            <img src="チョコザップロゴ.jpg" alt="チョコザップ">
+          </div>
+        </div>
       </div>
-      <div class="m-banner-logo">
-        <img src="チョコザップロゴ.jpg" alt="チョコザップ">
+
+      <!-- おすすめイベント -->
+      <div class="monthly-col">
+        <p style="font-size:15px;font-weight:700;letter-spacing:1px;color:var(--gold);margin-bottom:10px;">🍶 おすすめイベント</p>
+        <div class="m-banner m-banner-event" onclick="location.href='events.html'" style="cursor:pointer;">
+          <div class="m-banner-body">
+            <span class="m-tag">★ 開催予定</span>
+            <div class="m-title">第3回 酔い善い宵</div>
+            <p class="m-desc">人と酒がいちばん近づく夜。一夜限りの体験型日本酒会。初心者も大歓迎！</p>
+            <p class="m-deadline">🎟 Peatixにてチケット販売中</p>
+            <span class="m-cta">イベントを見る &rarr;</span>
+          </div>
+          <div class="m-banner-logo">
+            <img src="酔い善い宵ロゴ.png" alt="酔い善い宵">
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
 </section>
