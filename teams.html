@@ -704,6 +704,17 @@
     el._t = setTimeout(() => el.classList.remove('show'), 2600);
   }
 
+  /* URLハッシュからチームを自動展開 */
+  (function() {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    const validTeams = ['balerinas', 'nixons', 'yoiyoi'];
+    if (!validTeams.includes(hash)) return;
+    window.addEventListener('load', () => {
+      toggleTeam(hash);
+    });
+  })();
+
   /* スクロールフェードイン */
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
