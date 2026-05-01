@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>団体所属特典</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #1a1a2e;
+      --bg2:     #16213e;
+      --accent:  #e94560;
+      --gold:    #f0a500;
+      --cyan:    #a8dadc;
+      --text:    #eaeaea;
+      --muted:   #8899aa;
+      --border:  rgba(255,255,255,0.09);
+      --card-bg: #1c2a45;
+      --radius:  18px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+    }
+
+    .wrap {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #12122a 0%, #16213e 55%, #0f3460 100%);
+      padding: 80px 20px 96px;
+      text-align: center;
+    }
+    /* 背景の装飾円 */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle 500px at 50% -60px, rgba(233,69,96,.14) 0%, transparent 70%),
+        radial-gradient(circle 300px at 80% 80%, rgba(240,165,0,.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-deco {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(240,165,0,.12);
+      pointer-events: none;
+    }
+    .hero-deco-1 { width: 500px; height: 500px; top: -200px; left: 50%; transform: translateX(-50%); }
+    .hero-deco-2 { width: 340px; height: 340px; top: -120px; left: 50%; transform: translateX(-50%); border-color: rgba(240,165,0,.2); }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(240,165,0,.4);
+      padding: 5px 18px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .hero-title {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: clamp(44px, 12vw, 80px);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #fff 20%, var(--cyan) 70%, var(--gold) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 6px;
+      position: relative;
+    }
+
+    .hero-en {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(11px, 2.5vw, 14px);
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 36px;
+      position: relative;
+    }
+
+    /* 区切り線 */
+    .hero-rule {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .hero-rule::before,
+    .hero-rule::after {
+      content: '';
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(240,165,0,.5));
+    }
+    .hero-rule::after { background: linear-gradient(to left, transparent, rgba(240,165,0,.5)); }
+    .hero-rule-diamond {
+      width: 7px; height: 7px;
+      background: var(--gold);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ステータス列 */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .hero-stat {
+      flex: 1;
+      max-width: 140px;
+      text-align: center;
+      padding: 0 16px;
+    }
+    .hero-stat + .hero-stat {
+      border-left: 1px solid rgba(255,255,255,.1);
+    }
+    .hero-stat .s-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(24px, 6vw, 36px);
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .hero-stat .s-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ─ VIP Card ─ */
+    .vip-card {
+      position: relative;
+      max-width: 390px;
+      margin: 0 auto 40px;
+      background: linear-gradient(145deg, #0c1e3a 0%, #0f2a4a 45%, #091628 100%);
+      border: 1.5px solid rgba(240,165,0,.5);
+      border-radius: 22px;
+      padding: 26px 28px 24px;
+      overflow: hidden;
+      box-shadow:
+        0 32px 80px rgba(0,0,0,.65),
+        0 0 0 1px rgba(255,255,255,.05) inset,
+        0 0 60px rgba(240,165,0,.07);
+      transition: transform .3s, box-shadow .3s;
+      text-align: left;
+    }
+    .vip-card:hover {
+      transform: translateY(-4px) rotate(-0.4deg);
+      box-shadow: 0 44px 100px rgba(0,0,0,.7), 0 0 80px rgba(240,165,0,.13);
+    }
+    /* シマーアニメーション */
+    .vip-card::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -70%;
+      width: 55%; height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.05), transparent);
+      transform: skewX(-18deg);
+      animation: cardShimmer 6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes cardShimmer {
+      0%   { left: -70%; }
+      100% { left: 150%; }
+    }
+    /* 背景装飾円 */
+    .vip-bg-r {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .vip-bg-r1 { width: 220px; height: 220px; top: -90px; right: -70px; border: 1px solid rgba(240,165,0,.1); }
+    .vip-bg-r2 { width: 150px; height: 150px; top: -50px; right: -30px; border: 1px solid rgba(240,165,0,.2); }
+
+    .vip-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+    }
+    .vip-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+    .vip-exclusive {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      background: rgba(240,165,0,.12);
+      border: 1px solid rgba(240,165,0,.35);
+      padding: 4px 12px;
+      border-radius: 6px;
+    }
+
+    /* 3テーマ行 */
+    .vip-themes {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      margin-bottom: 18px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .vip-theme {
+      flex: 1;
+      text-align: center;
+    }
+    .vip-theme-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 2px;
+    }
+    .vip-theme-sep {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: rgba(240,165,0,.35);
+      padding: 0 4px;
+      flex-shrink: 0;
+    }
+
+    .vip-chip {
+      width: 44px; height: 33px;
+      background: linear-gradient(135deg, var(--gold), #b87a00);
+      border-radius: 7px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.4);
+    }
+    .vip-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      letter-spacing: 5px;
+      color: rgba(255,255,255,.4);
+      margin-bottom: 18px;
+    }
+    .vip-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .vip-name {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .vip-count { text-align: right; }
+    .vip-count .vc-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 34px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .vip-count .vc-lbl {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* 団体バッジ */
+    .orgs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+    }
+    .org-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.18);
+      padding: 8px 18px;
+      border-radius: 30px;
+      letter-spacing: 0.04em;
+      backdrop-filter: blur(4px);
+    }
+    .org-logo {
+      height: 26px;
+      width: auto;
+      border-radius: 5px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+    .card-logo {
+      display: block;
+      max-height: 68px;
+      width: auto;
+      max-width: 180px;
+      margin: 0 0 14px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 48px;
+      background: linear-gradient(to bottom right, transparent 49.5%, var(--bg2) 50%);
+    }
+
+    /* ─── MONTHLY BANNER ─── */
+    .monthly {
+      background: var(--bg2);
+      padding: 56px 0 48px;
+    }
+    .sec-label {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .sec-title {
+      font-size: clamp(20px, 4vw, 24px);
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .m-banner {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #b0192c 0%, #e94560 60%, #ff6b6b 100%);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      cursor: pointer;
+      box-shadow: 0 12px 44px rgba(233,69,96,.35);
+      transition: transform .2s, box-shadow .2s;
+      -webkit-tap-highlight-color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .m-banner:hover { transform: translateY(-3px); box-shadow: 0 18px 56px rgba(233,69,96,.45); }
+    .m-banner-body { flex: 1; min-width: 0; }
+    .m-banner-logo {
+      flex-shrink: 0;
+      width: clamp(110px, 24vw, 200px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+    }
+    .m-banner-logo img {
+      width: 100%;
+      height: auto;
+      max-height: 160px;
+      object-fit: contain;
+      margin: auto;
+      filter: brightness(1.3) drop-shadow(0 4px 16px rgba(0,0,0,.35));
+    }
+    .m-tag {
+      display: inline-block;
+      background: rgba(255,255,255,.22);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .m-title {
+      font-size: clamp(22px, 5vw, 28px);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .m-desc {
+      font-size: 15px;
+      color: rgba(255,255,255,.88);
+      line-height: 1.6;
+      margin-bottom: 8px;
+      max-width: 400px;
+    }
+    .m-deadline {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(0,0,0,.25);
+      padding: 4px 14px;
+      border-radius: 6px;
+      margin-bottom: 18px;
+    }
+    .m-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 20px;
+      transition: opacity .2s;
+    }
+    .m-cta:hover { opacity: .88; }
+
+    /* ─── BENEFITS ─── */
+    .benefits { padding: 56px 0 80px; }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      margin-bottom: 28px;
+      scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar { display: none; }
+
+    .f-btn {
+      flex-shrink: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 9px 22px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .f-btn:hover:not(.active) { border-color: rgba(255,255,255,.3); color: var(--text); }
+    .f-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+      font-weight: 700;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    @media (min-width: 580px)  { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 880px)  { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Card */
+    .b-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .b-card:hover:not(.coming-soon) { transform: translateY(-3px); box-shadow: 0 10px 34px rgba(0,0,0,.35); }
+    .b-card.hidden { display: none; }
+    .b-card.open { border-color: rgba(255,255,255,.2); }
+
+    /* Coming Soon カード */
+    .b-card.coming-soon {
+      cursor: default;
+      opacity: .55;
+      filter: grayscale(40%);
+      position: relative;
+    }
+    .coming-soon-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(10,14,30,.55);
+      z-index: 2;
+      border-radius: var(--radius);
+      backdrop-filter: blur(2px);
+    }
+    .coming-soon-badge {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      padding: 8px 24px;
+      border-radius: 8px;
+      background: rgba(0,0,0,.5);
+      box-shadow: 0 0 24px rgba(240,165,0,.3);
+    }
+
+    .b-top { padding: 22px 20px 18px; }
+
+    .cat-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 10px;
+      margin-bottom: 14px;
+    }
+    .cat-beauty  { background: rgba(233,30,99,.18);  color: #f48fb1; }
+    .cat-body    { background: rgba(0,188,212,.18);  color: #80deea; }
+    .cat-life    { background: rgba(76,175,80,.18);  color: #a5d6a7; }
+    .cat-gourmet { background: rgba(255,152,0,.18);  color: #ffcc80; }
+
+    .b-icon { font-size: 40px; display: block; margin-bottom: 12px; line-height: 1; }
+    .b-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+    .b-summary { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .b-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 20px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .chevron { font-size: 14px; transition: transform .3s ease; display: inline-block; }
+    .b-card.open .chevron { transform: rotate(180deg); }
+
+    .b-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .4s cubic-bezier(.4,0,.2,1);
+    }
+    .b-card.open .b-detail { max-height: 600px; }
+
+    .detail-inner {
+      background: rgba(0,0,0,.22);
+      border-top: 1px solid var(--border);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .d-row { display: flex; gap: 14px; }
+    .d-ico  { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .d-body { flex: 1; }
+    .d-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    .d-val { font-size: 14px; line-height: 1.6; }
+    .d-val strong { color: var(--cyan); }
+
+    .coupon-box {
+      margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(240,165,0,.1);
+      border: 1px dashed rgba(240,165,0,.5);
+      border-radius: 10px;
+      padding: 12px 16px;
+    }
+    .coupon-code {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+    .copy-btn {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--gold);
+      color: var(--bg);
+      border: none;
+      padding: 7px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity .18s;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { opacity: .82; }
+
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      padding: 9px 20px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity .18s;
+    }
+    .link-btn-red   { background: var(--accent); color: #fff; }
+    .link-btn-cyan  { background: rgba(168,218,220,.15); color: var(--cyan); border: 1px solid rgba(168,218,220,.35); }
+    .link-btn:hover { opacity: .82; }
+
+    .deadline-note {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #0b0d1a;
+      border-top: 1px solid var(--border);
+      padding: 48px 20px 40px;
+      text-align: center;
+    }
+    .ft-logo {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 4px;
+    }
+    .ft-tagline {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+    .ft-contacts { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+    .ft-row { font-size: 15px; color: var(--muted); }
+    .ft-row a { color: var(--cyan); text-decoration: none; transition: opacity .18s; }
+    .ft-row a:hover { opacity: .75; }
+    .ft-updated { font-size: 12px; color: rgba(255,255,255,.22); }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: rgba(255,255,255,.96);
+      color: var(--bg);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 10px 28px;
+      border-radius: 30px;
+      box-shadow: 0 8px 28px rgba(0,0,0,.35);
+      transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+      z-index: 9999;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+
+    /* ─── SCROLL DOT ─── */
+    .scroll-hint { display: flex; justify-content: center; margin-top: 40px; position: relative; }
+    .scroll-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.3);
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateY(0); opacity: .3; }
+      50%      { transform: translateY(6px); opacity: .9; }
+    }
+
+    /* ─── LOGO TICKER ─── */
+    .ticker-section {
+      background: rgba(0,0,0,.4);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 18px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+    .ticker-track {
+      display: flex;
+      align-items: center;
+      gap: 52px;
+      width: max-content;
+      animation: tickerScroll 18s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .ticker-logo {
+      height: 56px;
+      width: auto;
+      max-width: 160px;
+      object-fit: contain;
+      opacity: .8;
+      filter: brightness(1.2);
+      flex-shrink: 0;
+      transition: opacity .2s, filter .2s;
+    }
+    .ticker-logo:hover { opacity: 1; filter: brightness(1.5); }
+    .ticker-sep {
+      color: rgba(240,165,0,.4);
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    /* ─── SCROLL FADE-IN ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── VIPカード浮遊 ─── */
+    .vip-card {
+      animation: floatCard 5s ease-in-out infinite;
+    }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-6px); }
+    }
+    .vip-card:hover { animation-play-state: paused; }
+
+    /* ─── バナーパルス ─── */
+    .m-banner {
+      animation: bannerGlow 4s ease-in-out infinite;
+    }
+    @keyframes bannerGlow {
+      0%, 100% { box-shadow: 0 12px 44px rgba(233,69,96,.35); }
+      50%       { box-shadow: 0 16px 56px rgba(233,69,96,.55); }
+    }
+    .m-banner:hover { animation-play-state: paused; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (min-width: 720px) {
+      .hero { padding: 100px 20px 110px; }
+      .hero-stats { gap: 0; }
+      .hero-stat { max-width: 180px; padding: 0 32px; }
+      .m-banner { padding: 40px 36px; }
+      .m-banner-logo { width: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-deco hero-deco-1"></div>
+  <div class="hero-deco hero-deco-2"></div>
+
+  <div class="hero-eyebrow">Exclusive Member Benefits 2026</div>
+  <h1 class="hero-title">団体所属特典</h1>
+  <p class="hero-en">Member Exclusive Program</p>
+
+  <div class="hero-rule"><div class="hero-rule-diamond"></div></div>
+
+  <!-- VIP メンバーカード -->
+  <div class="vip-card">
+    <div class="vip-bg-r vip-bg-r1"></div>
+    <div class="vip-bg-r vip-bg-r2"></div>
+
+    <div class="vip-head">
+      <span class="vip-logo">VC</span>
+      <span class="vip-exclusive">会員限定特典</span>
+    </div>
+
+    <div class="vip-chip"></div>
+    <div class="vip-num">•••• •••• •••• 2026</div>
+
+    <div class="vip-foot">
+      <div class="vip-name">VIP</div>
+      <div class="vip-count">
+        <div class="vc-num">5</div>
+        <div class="vc-lbl">Benefits</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="orgs">
+    <span class="org-badge"><img src="バレリーナロゴ.jpg" class="org-logo" alt="バレリーナ">バレリーナ</span>
+    <span class="org-badge"><img src="ニクソンズロゴ.png" class="org-logo" alt="Satta Nixons">Satta Nixons</span>
+    <span class="org-badge"><img src="酔い善い宵ロゴ.png" class="org-logo" alt="酔い善い宵">酔い善い宵 -ヨイヨイヨイ-</span>
+  </div>
+
+  <div class="scroll-hint"><div class="scroll-dot"></div></div>
+</section>
+
+<!-- ── LOGO TICKER ── -->
+<div class="ticker-section">
+  <div class="ticker-track">
+    <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
+    <span class="ticker-sep">◆</span>
+    <img src="ワインロゴ.png" class="ticker-logo" alt="ワイン">
+    <span class="ticker-sep">◆</span>
+    <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
+    <span class="ticker-sep">◆</span>
+    <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
+    <span class="ticker-sep">◆</span>
+    <img src="ワインロゴ.png" class="ticker-logo" alt="ワイン">
+    <span class="ticker-sep">◆</span>
+    <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
+    <span class="ticker-sep">◆</span>
+    <!-- 2周目（シームレスループ用） -->
+    <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
+    <span class="ticker-sep">◆</span>
+    <img src="ワインロゴ.png" class="ticker-logo" alt="ワイン">
+    <span class="ticker-sep">◆</span>
+    <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
+    <span class="ticker-sep">◆</span>
+    <img src="チョコザップロゴ.jpg" class="ticker-logo" alt="チョコザップ">
+    <span class="ticker-sep">◆</span>
+    <img src="ワインロゴ.png" class="ticker-logo" alt="ワイン">
+    <span class="ticker-sep">◆</span>
+    <img src="オールドルーキーサウナロゴ.png" class="ticker-logo" alt="サウナ">
+    <span class="ticker-sep">◆</span>
+  </div>
+</div>
+
+<!-- ── MONTHLY BANNER ── -->
+<section class="monthly">
+  <div class="wrap">
+    <p class="sec-label">Today's Pick</p>
+    <h2 class="sec-title">今月のおすすめ特典</h2>
+
+    <div class="m-banner" onclick="openCard('chocozap')">
+      <div class="m-banner-body">
+        <span class="m-tag">★ 今月イチオシ</span>
+        <div class="m-title">チョコザップ 2ヶ月無料</div>
+        <p class="m-desc">24時間365日いつでも利用できるフィットネスジムが、会員証の提示だけで2ヶ月間完全無料！まずは気軽にカラダを動かそう。</p>
+        <p class="m-deadline">⏰ 申込期限：2026年5月11日まで</p>
+        <span class="m-cta">詳細を見る &rarr;</span>
+      </div>
+      <div class="m-banner-logo">
+        <img src="チョコザップロゴ.jpg" alt="チョコザップ">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BENEFITS ── -->
+<section class="benefits">
+  <div class="wrap">
+    <p class="sec-label">All Benefits</p>
+    <h2 class="sec-title">会員特典一覧</h2>
+
+    <div class="filters" role="group" aria-label="カテゴリフィルター">
+      <button class="f-btn active" data-filter="all">すべて</button>
+      <button class="f-btn" data-filter="body">カラダ</button>
+      <button class="f-btn" data-filter="beauty">美容</button>
+      <button class="f-btn" data-filter="life">生活</button>
+      <button class="f-btn" data-filter="gourmet">グルメ</button>
+    </div>
+
+    <div class="grid" id="grid">
+
+      <!-- 美容サロン -->
+      <article class="b-card" data-category="beauty" id="card-beauty" aria-expanded="false">
+        <div class="b-top">
+          <span class="cat-tag cat-beauty">美容</span>
+          <span class="b-icon">💇</span>
+          <h3 class="b-title">美容サロン割引</h3>
+          <p class="b-summary">提携サロンでのカット・カラー・トリートメントが特別割引に。おしゃれを楽しもう。</p>
+        </div>
+        <div class="b-foot">
+          <span>詳細・使い方を見る</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="b-detail">
+          <div class="detail-inner">
+            <div class="d-row">
+              <span class="d-ico">🎁</span>
+              <div class="d-body">
+                <p class="d-label">特典内容</p>
+                <p class="d-val">提携サロン全メニュー <strong>20% オフ</strong></p>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">📋</span>
+              <div class="d-body">
+                <p class="d-label">使い方</p>
+                <p class="d-val">予約時に「バレーサークル会員」とお伝えください。来店時に会員証をご提示ください。</p>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">📞</span>
+              <div class="d-body">
+                <p class="d-label">お問い合わせ</p>
+                <p class="d-val">提携サロン受付: 03-XXXX-XXXX</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 不動産 -->
+      <article class="b-card" data-category="life" id="card-life" aria-expanded="false">
+        <div class="b-top">
+          <span class="cat-tag cat-life">生活</span>
+          <span class="b-icon">🏠</span>
+          <h3 class="b-title">不動産手数料半額</h3>
+          <p class="b-summary">渋谷センター街の不動産屋の副社長がかじゅの知り合い。仲介手数料が最大半額に。</p>
+        </div>
+        <div class="b-foot">
+          <span>詳細・使い方を見る</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="b-detail">
+          <div class="detail-inner">
+            <div class="d-row">
+              <span class="d-ico">🎁</span>
+              <div class="d-body">
+                <p class="d-label">特典内容</p>
+                <p class="d-val">賃貸仲介手数料 <strong>50% オフ</strong></p>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">🤝</span>
+              <div class="d-body">
+                <p class="d-label">コネクション</p>
+                <p class="d-val">渋谷センター街にある不動産会社の副社長・<strong>森尻さん</strong>がかじゅの知り合いです。森尻さんへは直接LINEでご連絡いただけます。</p>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">📋</span>
+              <div class="d-body">
+                <p class="d-label">使い方</p>
+                <p class="d-val">利用希望の方は <strong>かじゅに直接ご連絡ください</strong>。森尻さんのLINEをご案内します。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- サウナ（Coming Soon） -->
+      <article class="b-card coming-soon" data-category="body" id="card-sauna">
+        <div class="coming-soon-overlay">
+          <span class="coming-soon-badge">Coming Soon</span>
+        </div>
+        <div class="b-top">
+          <span class="cat-tag cat-body">カラダ</span>
+          <img src="オールドルーキーサウナロゴ.png" class="card-logo" alt="オールドルーキーサウナ">
+          <h3 class="b-title">サウナ割引券</h3>
+          <p class="b-summary">近隣の提携サウナ施設で使えるお得な割引券。現在準備中です。お楽しみに！</p>
+        </div>
+        <div class="b-foot">
+          <span>準備中</span>
+          <span>🔒</span>
+        </div>
+      </article>
+
+      <!-- ワイン -->
+      <article class="b-card" data-category="gourmet" id="card-gourmet" aria-expanded="false">
+        <div class="b-top">
+          <span class="cat-tag cat-gourmet">グルメ</span>
+          <img src="ワインロゴ.png" class="card-logo" alt="ワイン">
+          <h3 class="b-title">ワイン 10% OFF</h3>
+          <p class="b-summary">イタリアでソムリエ資格を取得したかじゅの幼馴染が、日本ではほとんど流通していないワインを厳選。記念日やプレゼントにぜひ。</p>
+        </div>
+        <div class="b-foot">
+          <span>詳細・使い方を見る</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="b-detail">
+          <div class="detail-inner">
+            <div class="d-row">
+              <span class="d-ico">🎁</span>
+              <div class="d-body">
+                <p class="d-label">特典内容</p>
+                <p class="d-val">全商品 <strong>10% オフ</strong>（オンライン限定）</p>
+                <p class="d-val" style="margin-top:6px;font-size:13px;color:var(--muted);">イタリア現地でソムリエ資格を取得したかじゅの幼馴染が、日本ではほとんど流通していない希少ワインを厳選してお届け。記念日・プレゼントにもぴったりです🎁</p>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">🏷️</span>
+              <div class="d-body">
+                <p class="d-label">クーポンコード</p>
+                <div class="coupon-box">
+                  <span class="coupon-code">KAJU</span>
+                  <button class="copy-btn" onclick="copyCode('KAJU', event)">コピー</button>
+                </div>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">📋</span>
+              <div class="d-body">
+                <p class="d-label">使い方</p>
+                <p class="d-val">下記サイトにアクセスして欲しいワインを選び、カートでクーポンコード <strong>KAJU</strong> を入力してください。</p>
+                <a class="link-btn link-btn-cyan" href="https://www.libertas-wine.com/shop?fbclid=PAVERFWARgTQ5leHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAadLBlZ1Bc4RzoCNzj5UygXfP77gfqdFMiKapbxUlZAjPdB42BI23KrlpCK9Jg_aem_ac-rMOF5DBO4Aohx9P_bHg" target="_blank" rel="noopener noreferrer">🔗 ワインショップはこちら</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- チョコザップ -->
+      <article class="b-card" data-category="body" id="card-chocozap" aria-expanded="false">
+        <div class="b-top">
+          <span class="cat-tag cat-body">カラダ</span>
+          <img src="チョコザップロゴ.jpg" class="card-logo" alt="チョコザップ">
+          <h3 class="b-title">チョコザップ 2ヶ月無料</h3>
+          <p style="display:inline-block;background:#e94560;color:#fff;font-size:12px;font-weight:700;padding:4px 12px;border-radius:6px;margin-bottom:10px;">⏰ 申込期限：5月11日まで</p>
+          <p class="b-summary">24時間365日使えるフィットネスジムが2ヶ月間完全無料！新規入会者限定。</p>
+        </div>
+        <div class="b-foot">
+          <span>詳細・使い方を見る</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="b-detail">
+          <div class="detail-inner">
+            <div class="d-row">
+              <span class="d-ico">🎁</span>
+              <div class="d-body">
+                <p class="d-label">特典内容</p>
+                <p class="d-val">月額料金 <strong>2ヶ月分無料</strong>（新規入会者対象）</p>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">🏷️</span>
+              <div class="d-body">
+                <p class="d-label">限定クーポンコード</p>
+                <div class="coupon-box">
+                  <span class="coupon-code">MA563</span>
+                  <button class="copy-btn" onclick="copyCode('MA563', event)">コピー</button>
+                </div>
+              </div>
+            </div>
+            <div class="d-row">
+              <span class="d-ico">📋</span>
+              <div class="d-body">
+                <p class="d-label">使い方</p>
+                <p class="d-val">下記リンクから申し込み、クーポンコード <strong>MA563</strong> を入力してください。</p>
+                <a class="link-btn link-btn-red" href="https://lp.chocozap.jp/campaign-01/guerrilla/202605-1/" target="_blank" rel="noopener noreferrer">🏋️ チョコザップに申し込む</a>
+                <p class="deadline-note">⏰ 申込期限：2026年5月11日まで</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="ft-logo">団体所属特典</div>
+  <p class="ft-tagline">バレリーナ &nbsp;|&nbsp; Satta Nixons &nbsp;|&nbsp; 酔い善い宵 -ヨイヨイヨイ-</p>
+  <p class="ft-updated">最終更新日: 2026年5月1日</p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  /* スクロールフェードイン */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.b-card, .sec-title, .sec-label, .m-banner').forEach((el, i) => {
+    el.classList.add('fade-up');
+    el.style.transitionDelay = (i % 3) * 0.1 + 's';
+    observer.observe(el);
+  });
+
+  /* フィルター */
+  document.querySelectorAll('.f-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('.b-card').forEach(card => {
+        const show = f === 'all' || card.dataset.category === f;
+        card.classList.toggle('hidden', !show);
+        if (!show) { card.classList.remove('open'); card.setAttribute('aria-expanded', 'false'); }
+      });
+    });
+  });
+
+  /* アコーディオン（Coming Soonは除外） */
+  document.querySelectorAll('.b-card:not(.coming-soon)').forEach(card => {
+    card.addEventListener('click', e => {
+      if (e.target.closest('.copy-btn') || e.target.closest('a')) return;
+      const isOpen = card.classList.toggle('open');
+      card.setAttribute('aria-expanded', String(isOpen));
+    });
+  });
+
+  /* カードを開く＆スクロール */
+  function openCard(id) {
+    const card = document.getElementById('card-' + id);
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => {
+      card.classList.add('open');
+      card.setAttribute('aria-expanded', 'true');
+    }, 500);
+  }
+
+  /* クーポンコードコピー */
+  function copyCode(code, e) {
+    e.stopPropagation();
+    const fallback = () => {
+      const ta = document.createElement('textarea');
+      ta.value = code;
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    };
+    (navigator.clipboard ? navigator.clipboard.writeText(code).catch(fallback) : Promise.resolve(fallback()))
+      .then(() => showToast('クーポンコードをコピーしました！'));
+  }
+
+  /* トースト */
+  function showToast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(el._t);
+    el._t = setTimeout(() => el.classList.remove('show'), 2600);
+  }
+</script>
+</body>
+</html>
